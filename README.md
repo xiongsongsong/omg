@@ -1,6 +1,8 @@
 # Usage
 
 ```bash
+sudo npm i epoint -g
+
 omg https://raw.githubusercontent.com/xiongsongsong/omg/master/bin/epoint:7:10
 ```
 
