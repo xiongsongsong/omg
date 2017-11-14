@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+var request = require('request')
+var colors = require('colors')
+let url = ''
+
+for (var i = 0; i < process.argv.length; i++) {
+  let _url = process.argv[i]
+  _url = _url.replace(/'/, '').trim()
+  if (/^http[s]?/.test(url) > -1) {
+    url = _url
+  }
+}
+
+if (!url || !/^(http[s]?:\/\/.+?):(\d+):(\d+)$/.test(url)) {
+  throw new Error('require url, eg: epoint http://xxx.cn/x.js:1333:32')
+}
+
+url = RegExp.$1
+
+let lineNum = parseInt(RegExp.$2, 10)
+let colNum = parseInt(RegExp.$3, 10)
+
+const readline = require('readline')
+const rl = readline.createInterface({
+  input: request.get(url),
+  crlfDelay: Infinity
+})
+
+var i = 1
+var cross = 6
+
+rl.on('line', (line) => {
+  if (i === lineNum || (i >= lineNum - cross && i <= lineNum + cross)) {
+    if (i === lineNum) {
+      if (line.length >= colNum) {
+        console.log(
+          colors.yellow(line.substring(0, colNum - 1)) +
+          (colors.red(line.substring(colNum - 1, colNum))) +
+          (colors.yellow(line.substring(colNum)))
+        )
+        console.log(new Array(colNum).join('-').yellow + '^'.red)
+      } else {
+        console.log(colors.yellow(line))
+      }
+    } else {
+      console.log(line)
+    }
+  }
+
+  if (i > lineNum + cross) {
+    rl.close()
+  }
+  i++
+})
+
