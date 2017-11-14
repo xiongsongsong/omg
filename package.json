@@ -1,7 +1,7 @@
 {
   "name": "epoint",
-  "version": "1.0.4",
-  "description": "show javascript error",
+  "version": "1.0.5",
+  "description": "Locate the rows and columns of a web JS file.",
   "dependencies": {
     "colors": "^1.1.2",
     "request": "^2.83.0"
@@ -15,7 +15,10 @@
   },
   "keywords": [
     "javascript",
-    "error"
+    "error",
+    "linenumber",
+    "line",
+    "Exception"
   ],
   "author": "xiongsongsong",
   "license": "MIT"
